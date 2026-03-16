@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biglietti & Iscrizione — F1 Racing Saloon</title>
+  <meta name="description" content="Prenota i tuoi biglietti per gli eventi F1 Racing Saloon. Compila il modulo di iscrizione e vivi la Formula 1 in modo esclusivo.">
+  <meta property="og:title" content="Biglietti — F1 Racing Saloon">
+  <meta property="og:image" content="image/Logo.png">
+  <link rel="icon" type="image/png" href="image/Logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="iscrizione-body">
+
+  <div class="iscrizione-container">
+    <h1>Prenota il tuo posto</h1>
+
+    <form action="#" method="post" onsubmit="handleSubmit(event)">
+
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Il tuo nome" required>
+      </div>
+
+      <div class="form-group">
+        <label for="cognome">Cognome</label>
+        <input type="text" id="cognome" name="cognome" placeholder="Il tuo cognome" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="tuaemail@esempio.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="evento">Evento di interesse</label>
+        <select id="evento" name="evento">
+          <option value="">— Seleziona un evento —</option>
+          <option value="gold">Gold Lounge</option>
+          <option value="elite">Elite Lounge</option>
+          <option value="royal">Royal Suite</option>
+          <option value="pitlane">Vista Pit Lane</option>
+          <option value="generico">Evento generico</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox-row">
+          <input type="checkbox" name="termini" id="termini" required>
+          <label for="termini" style="font-weight:400; font-size:14px; text-transform:none; letter-spacing:0;">
+            Accetto i <a href="#" style="color:var(--red); text-decoration:underline;">termini e le condizioni</a>
+          </label>
+        </div>
+        <p class="form-note">Devi accettare per completare l'iscrizione.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="note">Note aggiuntive</label>
+        <textarea id="note" name="note" placeholder="Richieste particolari, allergie alimentari, numero di ospiti..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Invia Richiesta</button>
+    </form>
+
+    <p style="text-align:center; margin-top:20px; font-size:13px; color:#888;">
+      Risponderemo entro 24 ore all'email fornita.
+    </p>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.querySelector('.submit-btn');
+      btn.textContent = '✓ Richiesta inviata!';
+      btn.style.background = '#0a8a0a';
+      btn.disabled = true;
+    }
+  </script>
+</body>
+</html>

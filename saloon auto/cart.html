@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrello — F1 Racing Saloon</title>
+  <meta name="description" content="Il tuo carrello F1 Racing Saloon. Rivedi i prodotti selezionati e completa l'acquisto.">
+  <link rel="icon" type="image/png" href="image/Logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html"><img class="imglogo" src="image/Logo.png" alt="Logo"></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="chisiamo.html">Chi siamo</a>
+      <a href="servizi.html">Servizi</a>
+      <a href="eventi.html">Eventi</a>
+      <a href="contatti.html">Contatti</a>
+    </div>
+    <div class="nav-cta">
+      <a href="merchandise.html" class="btn-nav-merch">Merchandise</a>
+      <a href="Iscrizione.html" class="btn-nav-iscr">Iscriviti</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="chisiamo.html">Chi siamo</a>
+  <a href="servizi.html">Servizi</a>
+  <a href="eventi.html">Eventi</a>
+  <a href="contatti.html">Contatti</a>
+  <div class="mobile-menu-cta">
+    <a href="merchandise.html" class="btn-nav-merch">Merchandise</a>
+    <a href="Iscrizione.html" class="btn-nav-iscr">Iscriviti</a>
+  </div>
+</div>
+
+<div class="site-header" style="margin-top:68px;">
+  <h1>Il Tuo Carrello</h1>
+</div>
+
+<div style="max-width:700px; margin:48px auto; padding:0 24px;">
+
+  <div id="cartItems" style="display:flex; flex-direction:column; gap:12px;"></div>
+
+  <div id="cartSummary" style="display:none; margin-top:32px; background:var(--dark3); border-radius:12px; padding:28px; border:1px solid rgba(255,255,255,0.08);">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:20px;">
+      <span style="font-size:16px; color:rgba(255,255,255,0.6);">Totale ordine</span>
+      <span id="totalPrice" style="font-family:'Bebas Neue',sans-serif; font-size:40px; color:var(--red);">€ 0</span>
+    </div>
+    <button onclick="buyProducts()" style="width:100%; padding:15px; background:var(--red); color:#fff; font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; border:none; border-radius:8px; cursor:pointer; margin-bottom:12px; transition:background 0.3s;" onmouseover="this.style.background='#b30000'" onmouseout="this.style.background='var(--red)'">
+      Acquista ora →
+    </button>
+    <button onclick="goToProducts()" style="width:100%; padding:12px; background:transparent; color:rgba(255,255,255,0.6); font-size:14px; border:1px solid rgba(255,255,255,0.2); border-radius:8px; cursor:pointer; transition:all 0.3s;" onmouseover="this.style.borderColor='white'; this.style.color='white'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.color='rgba(255,255,255,0.6)'">
+      ← Continua a fare shopping
+    </button>
+  </div>
+
+  <div id="emptyCart" style="text-align:center; padding:80px 0; display:none;">
+    <div style="font-size:64px; margin-bottom:24px;">🛒</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:32px; margin-bottom:12px;">Carrello vuoto</h2>
+    <p style="color:rgba(255,255,255,0.5); margin-bottom:32px;">Non hai ancora aggiunto nessun prodotto.</p>
+    <a href="merchandise.html" class="btn-primary">Vai al negozio</a>
+  </div>
+
+</div>
+
+<div class="notif" id="notif"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="image/Logo.png" alt="Logo">
+        <p>Il primo saloon dedicato agli appassionati di Formula 1.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link">IG</a>
+          <a href="#" class="footer-social-link">FB</a>
+          <a href="#" class="footer-social-link">TK</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigazione</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="chisiamo.html">Chi siamo</a></li>
+          <li><a href="servizi.html">Servizi</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="contatti.html">Contatti</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Servizi</h4>
+        <ul>
+          <li><a href="hospitality.html">Hospitality Premium</a></li>
+          <li><a href="pitlane.html">Vista Pit Lane</a></li>
+          <li><a href="catering.html">Catering di Lusso</a></li>
+          <li><a href="merchandise.html">Merchandise</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contatti</h4>
+        <address>Via dei Motori 44<br>00100 Roma (RM)<br><br>+39 123 123 9876<br>f1racingsaloon@gmail.com</address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 F1 Racing Saloon. Tutti i diritti riservati.</p>
+      <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" aria-label="Torna in cima">↑</button>
+
+<script src="script.js"></script>
+<script>
+  // Override renderCart for the cart page full view
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('cartItems');
+    const summary   = document.getElementById('cartSummary');
+    const emptyDiv  = document.getElementById('emptyCart');
+    const totalEl   = document.getElementById('totalPrice');
+
+    function renderCartPage() {
+      container.innerHTML = '';
+      if (!cart || cart.length === 0) {
+        summary.style.display  = 'none';
+        emptyDiv.style.display = 'block';
+        return;
+      }
+      summary.style.display  = 'block';
+      emptyDiv.style.display = 'none';
+
+      let sum = 0;
+      cart.forEach((item, i) => {
+        sum += item.prezzo;
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:16px;background:var(--dark3);border-radius:10px;padding:16px 20px;border:1px solid rgba(255,255,255,0.06);';
+        row.innerHTML = `
+          <img src="image/${item.image}" style="width:52px;height:52px;object-fit:contain;background:#1c1c1c;border-radius:8px;padding:6px;flex-shrink:0;">
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:16px;">${item.nome}</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--red);">€${item.prezzo.toFixed(2)}</div>
+          </div>
+          <button onclick="removeFromCart(${i}); renderCartPage();" style="background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-size:18px;cursor:pointer;padding:6px 12px;border-radius:6px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">✕</button>
+        `;
+        container.appendChild(row);
+      });
+      if (totalEl) totalEl.textContent = '€ ' + sum.toFixed(2);
+    }
+
+    renderCartPage();
+  });
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

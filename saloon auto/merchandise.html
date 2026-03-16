@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merchandise — F1 Racing Saloon</title>
+  <meta name="description" content="Shop ufficiale F1 Racing Saloon: cappellini, giacche, poster e pacchetti VIP di tutti i team di Formula 1.">
+  <meta property="og:title" content="Merchandise — F1 Racing Saloon">
+  <meta property="og:description" content="Abbigliamento, poster ed esperienze esclusive. Tutto il mondo della F1 in un solo shop.">
+  <meta property="og:image" content="image/Logo.png">
+  <link rel="icon" type="image/png" href="image/Logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html"><img class="imglogo" src="image/Logo.png" alt="Logo"></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="chisiamo.html">Chi siamo</a>
+      <a href="servizi.html">Servizi</a>
+      <a href="eventi.html">Eventi</a>
+      <a href="contatti.html">Contatti</a>
+    </div>
+    <div class="nav-cta">
+      <a href="merchandise.html" class="btn-nav-merch pagina">Merchandise</a>
+      <a href="Iscrizione.html" class="btn-nav-iscr">Iscriviti</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="chisiamo.html">Chi siamo</a>
+  <a href="servizi.html">Servizi</a>
+  <a href="eventi.html">Eventi</a>
+  <a href="contatti.html">Contatti</a>
+  <div class="mobile-menu-cta">
+    <a href="merchandise.html" class="btn-nav-merch">Merchandise</a>
+    <a href="Iscrizione.html" class="btn-nav-iscr">Iscriviti</a>
+  </div>
+</div>
+
+<header class="store-header" style="margin-top:68px;">
+  <h2>Negozio</h2>
+  <div class="cart-icon" onclick="openCart()">
+    🛒 <span id="cartCount" class="cart-count">0</span>
+  </div>
+</header>
+
+<div class="store-banner">
+  <div class="stripe top"></div>
+  <h1>MERCHANDISE</h1>
+  <p>Abbigliamento · Poster · Esperienze Esclusive</p>
+  <div class="stripe bottom"></div>
+</div>
+
+<div class="section-label">
+  <h2>✦ Esperienze Premium</h2>
+  <p>Hospitality esclusiva e accesso pit lane — disponibilità limitata</p>
+</div>
+
+<div class="premium-section lounge">
+  <div class="premium-header">
+    <div class="premium-icon">🥂</div>
+    <div class="premium-title-area">
+      <h2>HOSPITALITY LOUNGE</h2>
+      <p>Champagne, cucina gourmet e vista privilegiata sul circuito. Un'esperienza irripetibile.</p>
+    </div>
+    <span class="premium-badge">VIP EXCLUSIVE</span>
+  </div>
+  <div class="premium-cards" id="loungeCards"></div>
+</div>
+
+<div class="premium-section pitlane">
+  <div class="premium-header">
+    <div class="premium-icon">🏎️</div>
+    <div class="premium-title-area">
+      <h2>PIT LANE ACCESS</h2>
+      <p>Entra nel cuore della Formula 1. Vista ravvicinata, adrenalina garantita.</p>
+    </div>
+    <span class="premium-badge">SOLD OUT RISK</span>
+  </div>
+  <div class="premium-cards" id="pitlaneCards"></div>
+</div>
+
+<div class="section-label" style="padding-top:72px;">
+  <h2>🛍️ Merchandise</h2>
+  <p>Cappellini, giacche e poster — tutti i team ufficiali</p>
+</div>
+
+<div class="cat-tabs">
+  <button class="cat-tab active" onclick="filterCat('all',this)">Tutti</button>
+  <button class="cat-tab" onclick="filterCat('cappellino',this)">🧢 Cappellini</button>
+  <button class="cat-tab" onclick="filterCat('giacca',this)">🧥 Giacche</button>
+  <button class="cat-tab" onclick="filterCat('poster',this)">🖼️ Poster</button>
+</div>
+
+<div class="products-grid" id="productList"></div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-backdrop" onclick="closeCart()"></div>
+  <div class="cart-panel">
+    <div class="cart-panel-header">
+      <h3>Carrello</h3>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items-list" id="cartItems">
+      <div class="cart-empty">Il carrello è vuoto</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Totale</span>
+        <span class="cart-total-val" id="totalPrice">€ 0</span>
+      </div>
+      <button class="checkout-btn" onclick="buyProducts()">Acquista ora →</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="image/Logo.png" alt="Logo">
+        <p>Il primo saloon dedicato agli appassionati di Formula 1. Tutti i prezzi IVA inclusa. Disponibilità limitata.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link">IG</a>
+          <a href="#" class="footer-social-link">FB</a>
+          <a href="#" class="footer-social-link">TK</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigazione</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="chisiamo.html">Chi siamo</a></li>
+          <li><a href="servizi.html">Servizi</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="contatti.html">Contatti</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categorie</h4>
+        <ul>
+          <li><a href="#" onclick="filterCat('cappellino', document.querySelector('.cat-tab'))">Cappellini</a></li>
+          <li><a href="#" onclick="filterCat('giacca', document.querySelector('.cat-tab'))">Giacche</a></li>
+          <li><a href="#" onclick="filterCat('poster', document.querySelector('.cat-tab'))">Poster</a></li>
+          <li><a href="#">Esperienze VIP</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contatti</h4>
+        <address>Via dei Motori 44<br>00100 Roma (RM)<br><br>+39 123 123 9876<br>f1racingsaloon@gmail.com</address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 F1 Racing Saloon. Tutti i diritti riservati.</p>
+      <p><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" aria-label="Torna in cima">↑</button>
+
+<script src="script.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
