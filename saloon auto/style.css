@@ -1,6 +1,4 @@
-/* ============================================================
-   IMPORT FONTS
-============================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&family=Bebas+Neue&display=swap');
 
 /* ============================================================
@@ -1446,12 +1444,11 @@ footer {
 }
 
 .side-logos img {
-  width: 120px;
-  height: 80px;
+  width: 200px;
+  height: 200px;
   object-fit: contain;
   border-radius: 8px;
   border: 1px solid rgba(225,6,0,0.3);
-  padding: 8px;
   background: var(--dark2);
   transition: border-color var(--transition), transform var(--transition);
 }
