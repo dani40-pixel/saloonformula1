@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accedi / Iscriviti — F1 Racing Saloon</title>
+  <meta name="description" content="Accedi o crea il tuo account F1 Racing Saloon per acquistare merchandise esclusivo.">
+  <link rel="icon" type="image/png" href="image/Logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+ 
+  <style>
+    body { background: #0d0d0d; overflow-x: hidden; }
+ 
+    .auth-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 0%, rgba(225,6,0,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 80% at 10% 100%, rgba(225,6,0,0.10) 0%, transparent 50%),
+        #0d0d0d;
+    }
+    .auth-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(-55deg, transparent, transparent 60px, rgba(225,6,0,0.03) 60px, rgba(225,6,0,0.03) 62px);
+    }
+ 
+    .auth-page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 90px 24px 60px;
+    }
+ 
+    .auth-split {
+      display: flex; width: 100%; max-width: 900px;
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);
+    }
+ 
+    /* LEFT PROMO */
+    .auth-promo {
+      width: 340px; flex-shrink: 0;
+      background: #e10600;
+      background-image:
+        radial-gradient(ellipse at 0% 100%, rgba(0,0,0,0.4) 0%, transparent 60%),
+        radial-gradient(ellipse at 100% 0%, rgba(255,255,255,0.08) 0%, transparent 50%);
+      padding: 52px 36px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .auth-promo::before {
+      content: 'F1';
+      position: absolute; bottom: -30px; right: -20px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 220px; line-height: 1;
+      color: rgba(255,255,255,0.06); pointer-events: none; user-select: none;
+    }
+    .promo-logo img { height: 48px; }
+    .promo-body { position: relative; z-index: 1; }
+    .promo-body h2 {
+      font-family: 'Bebas Neue', sans-serif; font-size: 38px;
+      letter-spacing: 2px; line-height: 1.1; margin-bottom: 16px; color: #fff;
+    }
+    .promo-body p { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 28px; }
+    .promo-perks { display: flex; flex-direction: column; gap: 12px; }
+    .perk { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 600; }
+    .perk-icon {
+      width: 30px; height: 30px;
+      background: rgba(255,255,255,0.15); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+ 
+    /* RIGHT FORM PANEL */
+    .auth-form-panel { flex: 1; background: #141414; padding: 44px 40px; display: flex; flex-direction: column; }
+ 
+    /* TABS */
+    .auth-tabs {
+      display: flex;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px; padding: 4px; margin-bottom: 36px;
+    }
+    .tab-btn {
+      flex: 1; padding: 11px;
+      background: none; border: none;
+      color: rgba(255,255,255,0.4);
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px;
+      border-radius: 8px; cursor: pointer; transition: all .25s;
+    }
+    .tab-btn.active { background: #e10600; color: #fff; box-shadow: 0 4px 16px rgba(225,6,0,0.35); }
+ 
+    /* FORMS */
+    .auth-form { display: none; flex-direction: column; gap: 16px; }
+    .auth-form.visible { display: flex; }
+ 
+    .form-row { display: flex; gap: 12px; }
+    .form-row .fg { flex: 1; }
+ 
+    .fg { display: flex; flex-direction: column; gap: 6px; }
+    .fg label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .fg input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 12px 14px;
+      color: #fff; font-family: 'Titillium Web', sans-serif; font-size: 15px;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+      outline: none; width: 100%;
+    }
+    .fg input:focus {
+      border-color: #e10600; background: rgba(225,6,0,0.04);
+      box-shadow: 0 0 0 3px rgba(225,6,0,0.12);
+    }
+    .fg input.field-error { border-color: #ff4444; }
+ 
+    .field-msg { font-size: 11px; color: #ff6666; display: none; margin-top: 2px; }
+    .field-msg.visible { display: block; }
+ 
+    /* Password strength */
+    .pw-strength { display: none; margin-top: 6px; }
+    .pw-strength.visible { display: block; }
+    .pw-bar { height: 3px; border-radius: 2px; background: rgba(255,255,255,0.08); margin-bottom: 4px; overflow: hidden; }
+    .pw-fill { height: 100%; border-radius: 2px; transition: width .3s, background .3s; }
+    .pw-label { font-size: 10px; color: rgba(255,255,255,0.35); }
+ 
+    /* Tooltip */
+    .pw-hint-icon {
+      width: 16px; height: 16px;
+      background: rgba(225,6,0,0.2); border: 1px solid rgba(225,6,0,0.4);
+      color: #e10600; border-radius: 50%; font-size: 10px; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: help; position: relative;
+    }
+    .pw-hint-icon .pw-tooltip {
+      position: absolute; top: 22px; left: -8px; width: 190px;
+      background: #1f1f1f; border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.7;
+      z-index: 50; opacity: 0; visibility: hidden; transition: opacity .2s;
+      font-weight: 400; letter-spacing: 0; text-transform: none; pointer-events: none;
+    }
+    .pw-hint-icon:hover .pw-tooltip { opacity: 1; visibility: visible; }
+ 
+    /* Forgot */
+    .forgot-link { text-align: right; font-size: 12px; color: rgba(255,255,255,0.35); margin-top: -8px; margin-bottom: -4px; }
+    .forgot-link a { color: #e10600; }
+    .forgot-link a:hover { opacity: .75; }
+ 
+    /* Checkbox */
+    .check-row { display: flex; align-items: flex-start; gap: 10px; padding: 2px 0; }
+    .check-row input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-color: #e10600; cursor: pointer; flex-shrink: 0; }
+    .check-row label { font-size: 13px; color: rgba(255,255,255,0.5); cursor: pointer; line-height: 1.5; font-weight: 400; text-transform: none; letter-spacing: 0; }
+    .check-row a { color: #e10600; text-decoration: underline; }
+ 
+    /* Submit */
+    .auth-submit {
+      width: 100%; padding: 14px;
+      background: #e10600; color: #fff;
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px;
+      border: none; border-radius: 10px; cursor: pointer;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 6px 20px rgba(225,6,0,0.3); margin-top: 4px;
+    }
+    .auth-submit:hover { background: #b30000; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(225,6,0,0.4); }
+    .auth-submit:active { transform: translateY(0); }
+    .auth-submit:disabled { background: #444; cursor: not-allowed; transform: none; box-shadow: none; }
+ 
+    /* Banner */
+    .form-banner {
+      background: rgba(255,68,68,0.1); border: 1px solid rgba(255,68,68,0.3);
+      border-radius: 8px; padding: 10px 14px;
+      font-size: 13px; color: #ff8888; display: none; line-height: 1.5;
+    }
+    .form-banner.visible { display: block; }
+    .form-banner.success { background: rgba(10,138,10,0.1); border-color: rgba(10,138,10,0.3); color: #66cc66; }
+ 
+    /* Switch hint */
+    .auth-switch { text-align: center; font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 20px; }
+    .auth-switch button {
+      background: none; border: none; color: #e10600;
+      font-family: 'Titillium Web', sans-serif; font-size: 13px; font-weight: 700;
+      cursor: pointer; padding: 0; text-decoration: underline;
+    }
+ 
+    /* SUCCESS STATE */
+    .auth-success {
+      display: none; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; flex: 1; gap: 16px; padding: 20px 0;
+    }
+    .auth-success.visible { display: flex; }
+    .success-icon {
+      width: 72px; height: 72px;
+      background: rgba(10,138,10,0.15); border: 2px solid rgba(10,138,10,0.5);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px;
+    }
+    .auth-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; }
+    .auth-success p { font-size: 14px; color: rgba(255,255,255,0.5); max-width: 280px; }
+    .auth-success .auth-submit { max-width: 260px; margin-top: 8px; }
+ 
+    /* Logout btn */
+    .logout-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.4); font-family: 'Titillium Web', sans-serif;
+      font-size: 13px; padding: 8px 18px; border-radius: 8px; cursor: pointer;
+      transition: all .2s; margin-top: 4px;
+    }
+    .logout-btn:hover { border-color: #e10600; color: #e10600; }
+ 
+    @media (max-width: 720px) {
+      .auth-promo { display: none; }
+      .auth-form-panel { padding: 32px 24px; }
+    }
+    @media (max-width: 480px) {
+      .form-row { flex-direction: column; gap: 16px; }
+      .auth-form-panel { padding: 24px 18px; }
+      .auth-page { padding: 80px 12px 40px; }
+    }
+  </style>
+</head>
+ 
+<body>
+<div class="auth-bg"></div>
+ 
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html"><img class="imglogo" src="image/Logo.png" alt="Logo"></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="chisiamo.html">Chi siamo</a>
+      <a href="servizi.html">Servizi</a>
+      <a href="eventi.html">Eventi</a>
+      <a href="contatti.html">Contatti</a>
+    </div>
+    <div class="nav-cta">
+      <a href="merchandise.html" class="btn-nav-merch">Merchandise</a>
+      <a href="login-sign up.html" class="btn-nav-iscr" id="navAuthBtn">Iscriviti</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+ 
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="chisiamo.html">Chi siamo</a>
+  <a href="servizi.html">Servizi</a>
+  <a href="eventi.html">Eventi</a>
+  <a href="contatti.html">Contatti</a>
+  <div class="mobile-menu-cta">
+    <a href="merchandise.html" class="btn-nav-merch">Merchandise</a>
+    <a href="login-sign up.html" class="btn-nav-iscr">Iscriviti</a>
+  </div>
+</div>
+ 
+<!-- AUTH PAGE -->
+<div class="auth-page">
+  <div class="auth-split">
+ 
+    <!-- LEFT -->
+    <div class="auth-promo">
+      <div class="promo-logo"><img src="image/Logo.png" alt="F1 Racing Saloon"></div>
+      <div class="promo-body">
+        <h2>Il Paddock Ti Aspetta</h2>
+        <p>Crea il tuo account e accedi all'esperienza F1 più esclusiva d'Italia. Merchandise ufficiale, eventi VIP e molto altro.</p>
+        <div class="promo-perks">
+          <div class="perk"><div class="perk-icon">🛒</div> Acquisti rapidi e sicuri</div>
+          <div class="perk"><div class="perk-icon">🎟️</div> Accesso eventi esclusivi</div>
+          <div class="perk"><div class="perk-icon">📦</div> Storico ordini sempre disponibile</div>
+          <div class="perk"><div class="perk-icon">⚡</div> Offerte riservate ai membri</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">© 2026 F1 Racing Saloon</div>
+    </div>
+ 
+    <!-- RIGHT -->
+    <div class="auth-form-panel">
+ 
+      <div class="auth-tabs">
+        <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Accedi</button>
+        <button class="tab-btn" id="tabSignup" onclick="switchTab('signup')">Registrati</button>
+      </div>
+ 
+      <!-- SUCCESS -->
+      <div class="auth-success" id="successState">
+        <div class="success-icon">✓</div>
+        <h3 id="successTitle">Bentornato!</h3>
+        <p id="successMsg">Accesso effettuato con successo.</p>
+        <button class="auth-submit" onclick="window.location.href='merchandise.html'">Vai allo shop →</button>
+        <button class="logout-btn" onclick="doLogout()">Esci dall'account</button>
+      </div>
+ 
+      <!-- LOGIN -->
+      <form class="auth-form visible" id="loginForm" onsubmit="handleLogin(event)" novalidate>
+ 
+        <div class="form-banner" id="loginBanner"></div>
+ 
+        <div class="fg">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="tuaemail@esempio.com" autocomplete="email">
+          <span class="field-msg" id="loginEmailMsg">Inserisci un'email valida.</span>
+        </div>
+ 
+        <div class="fg">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+          <span class="field-msg" id="loginPasswordMsg">Inserisci la password.</span>
+        </div>
+ 
+        <div class="forgot-link"><a href="#" onclick="showForgot(event)">Password dimenticata?</a></div>
+ 
+        <button type="submit" class="auth-submit">Accedi →</button>
+ 
+        <div class="auth-switch">
+          Non hai un account? <button type="button" onclick="switchTab('signup')">Registrati</button>
+        </div>
+      </form>
+ 
+      <!-- SIGNUP -->
+      <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)" novalidate>
+ 
+        <div class="form-banner" id="signupBanner"></div>
+ 
+        <div class="form-row">
+          <div class="fg">
+            <label for="signupNome">Nome</label>
+            <input type="text" id="signupNome" placeholder="Mario" autocomplete="given-name">
+            <span class="field-msg" id="signupNomeMsg">Campo obbligatorio.</span>
+          </div>
+          <div class="fg">
+            <label for="signupCognome">Cognome</label>
+            <input type="text" id="signupCognome" placeholder="Rossi" autocomplete="family-name">
+            <span class="field-msg" id="signupCognomeMsg">Campo obbligatorio.</span>
+          </div>
+        </div>
+ 
+        <div class="fg">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" placeholder="tuaemail@esempio.com" autocomplete="email">
+          <span class="field-msg" id="signupEmailMsg">Inserisci un'email valida.</span>
+        </div>
+ 
+        <div class="fg">
+          <label for="signupPassword">
+            Password
+            <span class="pw-hint-icon">ⓘ
+              <span class="pw-tooltip">
+                • Minimo 8 caratteri<br>
+                • Massimo 12 caratteri<br>
+                • Almeno una lettera<br>
+                • Almeno un numero
+              </span>
+            </span>
+          </label>
+          <input type="password" id="signupPassword" placeholder="••••••••" minlength="8" maxlength="12" autocomplete="new-password" oninput="checkPasswordStrength(this.value)">
+          <span class="field-msg" id="signupPasswordMsg">Password non valida (8–12 caratteri, lettere + numero).</span>
+          <div class="pw-strength" id="pwStrength">
+            <div class="pw-bar"><div class="pw-fill" id="pwFill" style="width:0%"></div></div>
+            <div class="pw-label" id="pwLabel">Forza password</div>
+          </div>
+        </div>
+ 
+        <div class="fg">
+          <label for="signupPasswordConf">Conferma Password</label>
+          <input type="password" id="signupPasswordConf" placeholder="••••••••" maxlength="12" autocomplete="new-password">
+          <span class="field-msg" id="signupPasswordConfMsg">Le password non coincidono.</span>
+        </div>
+ 
+        <div class="check-row">
+          <input type="checkbox" id="termini">
+          <label for="termini">Accetto i <a href="#">termini e le condizioni</a> e la <a href="#">privacy policy</a></label>
+        </div>
+        <span class="field-msg" id="terminiMsg">Devi accettare per continuare.</span>
+ 
+        <button type="submit" class="auth-submit">Crea Account →</button>
+ 
+        <div class="auth-switch">
+          Hai già un account? <button type="button" onclick="switchTab('login')">Accedi</button>
+        </div>
+      </form>
+ 
+    </div>
+  </div>
+</div>
+ 
+<div class="notif" id="notif"></div>
+ 
+<script>
+  /* ── STORAGE ── */
+  const USERS_KEY   = 'f1rs_users';
+  const SESSION_KEY = 'f1rs_session';
+ 
+  const getUsers   = () => JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+  const saveUsers  = u => localStorage.setItem(USERS_KEY, JSON.stringify(u));
+  const getSession = () => JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+  const setSession = u => localStorage.setItem(SESSION_KEY, JSON.stringify(u));
+ 
+  /* ── ON LOAD: check existing session ── */
+  window.addEventListener('DOMContentLoaded', () => {
+    const s = getSession();
+    if (s) {
+      showSuccess(`Bentornato, ${s.nome}! 🏁`, `Sei già connesso come ${s.email}.`);
+      updateNav(s);
+    }
+  });
+ 
+  function updateNav(session) {
+    const btn = document.getElementById('navAuthBtn');
+    if (!btn || !session) return;
+    btn.textContent = '👤 ' + session.nome;
+    btn.href = 'javascript:void(0)';
+    btn.onclick = () => { if (confirm(`Connesso come ${session.nome}.\nVuoi uscire?`)) doLogout(); };
+  }
+ 
+  function doLogout() {
+    localStorage.removeItem(SESSION_KEY);
+    showNotif('👋 Disconnesso.');
+    setTimeout(() => location.reload(), 800);
+  }
+ 
+  /* ── TABS ── */
+  function switchTab(tab) {
+    document.getElementById('loginForm').classList.toggle('visible', tab === 'login');
+    document.getElementById('signupForm').classList.toggle('visible', tab === 'signup');
+    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+    document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+    document.getElementById('successState').classList.remove('visible');
+    clearBanners();
+  }
+ 
+  /* ── SUCCESS ── */
+  function showSuccess(title, msg) {
+    document.getElementById('loginForm').classList.remove('visible');
+    document.getElementById('signupForm').classList.remove('visible');
+    document.getElementById('successTitle').textContent = title;
+    document.getElementById('successMsg').textContent = msg;
+    document.getElementById('successState').classList.add('visible');
+  }
+ 
+  /* ── FIELD HELPERS ── */
+  function fieldOk(inputId, msgId) {
+    document.getElementById(inputId)?.classList.remove('field-error');
+    document.getElementById(msgId)?.classList.remove('visible');
+  }
+ 
+  function fieldErr(inputId, msgId, txt) {
+    const inp = document.getElementById(inputId);
+    const msg = document.getElementById(msgId);
+    if (inp) inp.classList.add('field-error');
+    if (msg) { if (txt) msg.textContent = txt; msg.classList.add('visible'); }
+    return false;
+  }
+ 
+  function clearBanners() {
+    ['loginBanner','signupBanner'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.className = 'form-banner'; el.textContent = ''; }
+    });
+  }
+ 
+  function banner(id, msg, ok = false) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'form-banner visible' + (ok ? ' success' : '');
+  }
+ 
+  const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  const validPw    = p => p.length >= 8 && p.length <= 12 && /[a-zA-Z]/.test(p) && /[0-9]/.test(p);
+ 
+  /* ── PASSWORD STRENGTH ── */
+  function checkPasswordStrength(pw) {
+    const bar   = document.getElementById('pwFill');
+    const label = document.getElementById('pwLabel');
+    const wrap  = document.getElementById('pwStrength');
+    if (!bar) return;
+    wrap.classList.toggle('visible', pw.length > 0);
+ 
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[a-zA-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (pw.length >= 10) score++;
+    if (/[^a-zA-Z0-9]/.test(pw)) score++;
+ 
+    const lvls = [
+      { w:'20%', c:'#ff4444', t:'Molto debole' },
+      { w:'40%', c:'#ff8800', t:'Debole' },
+      { w:'60%', c:'#ffcc00', t:'Discreta' },
+      { w:'80%', c:'#88cc00', t:'Buona' },
+      { w:'100%',c:'#00cc66', t:'Ottima' },
+    ];
+    const lvl = lvls[Math.min(score - 1, 4)] || lvls[0];
+    bar.style.width = lvl.w;
+    bar.style.background = lvl.c;
+    label.style.color = lvl.c;
+    label.textContent = lvl.t;
+  }
+ 
+  /* ── LOGIN ── */
+  function handleLogin(e) {
+    e.preventDefault();
+    clearBanners();
+ 
+    const email = document.getElementById('loginEmail').value.trim();
+    const pw    = document.getElementById('loginPassword').value;
+    let ok = true;
+ 
+    fieldOk('loginEmail', 'loginEmailMsg');
+    fieldOk('loginPassword', 'loginPasswordMsg');
+ 
+    if (!validEmail(email)) { fieldErr('loginEmail', 'loginEmailMsg', "Email non valida."); ok = false; }
+    if (!pw) { fieldErr('loginPassword', 'loginPasswordMsg', "Inserisci la password."); ok = false; }
+    if (!ok) return;
+ 
+    const users = getUsers();
+    const user  = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+ 
+    if (!user) {
+      banner('loginBanner', '⚠️ Nessun account trovato. Registrati prima!');
+      fieldErr('loginEmail', 'loginEmailMsg', 'Email non registrata.');
+      return;
+    }
+    if (user.password !== pw) {
+      banner('loginBanner', '⚠️ Password errata. Riprova.');
+      fieldErr('loginPassword', 'loginPasswordMsg', 'Password errata.');
+      return;
+    }
+ 
+    setSession({ email: user.email, nome: user.nome, cognome: user.cognome });
+    updateNav(user);
+    showSuccess(`Bentornato, ${user.nome}! 🏁`, `Accesso effettuato. Buono shopping!`);
+    showNotif(`✓ Bentornato ${user.nome}!`);
+  }
+ 
+  /* ── SIGNUP ── */
+  function handleSignup(e) {
+    e.preventDefault();
+    clearBanners();
+ 
+    const nome     = document.getElementById('signupNome').value.trim();
+    const cognome  = document.getElementById('signupCognome').value.trim();
+    const email    = document.getElementById('signupEmail').value.trim();
+    const pw       = document.getElementById('signupPassword').value;
+    const pwConf   = document.getElementById('signupPasswordConf').value;
+    const termini  = document.getElementById('termini').checked;
+    let ok = true;
+ 
+    ['signupNome','signupCognome','signupEmail','signupPassword','signupPasswordConf'].forEach(id => fieldOk(id, id + 'Msg'));
+    document.getElementById('terminiMsg').classList.remove('visible');
+ 
+    if (!nome)   { fieldErr('signupNome',    'signupNomeMsg',    'Campo obbligatorio.'); ok = false; }
+    if (!cognome){ fieldErr('signupCognome', 'signupCognomeMsg', 'Campo obbligatorio.'); ok = false; }
+    if (!validEmail(email)) { fieldErr('signupEmail', 'signupEmailMsg', "Email non valida."); ok = false; }
+    if (!validPw(pw)) { fieldErr('signupPassword', 'signupPasswordMsg', "Password non valida (8-12 car., lettera + numero)."); ok = false; }
+    if (pw !== pwConf) { fieldErr('signupPasswordConf', 'signupPasswordConfMsg', 'Le password non coincidono.'); ok = false; }
+    if (!termini) { document.getElementById('terminiMsg').classList.add('visible'); ok = false; }
+    if (!ok) return;
+ 
+    const users = getUsers();
+    if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+      banner('signupBanner', '⚠️ Email già registrata. Accedi invece!');
+      fieldErr('signupEmail', 'signupEmailMsg', 'Email già in uso.');
+      return;
+    }
+ 
+    const newUser = { nome, cognome, email, password: pw, createdAt: new Date().toISOString() };
+    users.push(newUser);
+    saveUsers(users);
+    setSession({ email, nome, cognome });
+    updateNav(newUser);
+    showSuccess(`Benvenuto nel paddock, ${nome}! 🏁`, `Account creato. Ora puoi acquistare merchandise e biglietti esclusivi!`);
+    showNotif(`✓ Account creato! Benvenuto ${nome}!`);
+  }
+ 
+  /* ── FORGOT PASSWORD ── */
+  function showForgot(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!validEmail(email)) {
+      fieldErr('loginEmail', 'loginEmailMsg', 'Inserisci prima la tua email.');
+      return;
+    }
+    const user = getUsers().find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (user) {
+      banner('loginBanner', `📧 Demo — La tua password è: ${user.password}`, true);
+    } else {
+      banner('loginBanner', '⚠️ Nessun account trovato con questa email.');
+    }
+  }
+ 
+  /* ── TOAST ── */
+  function showNotif(msg) {
+    const el = document.getElementById('notif');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2800);
+  }
+</script>
+ 
+<script src="nav.js"></script>
+</body>
+</html>
