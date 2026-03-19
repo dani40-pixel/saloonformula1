@@ -31,8 +31,8 @@ const products = [
     { id:25, nome:"Poster Calendario F1 2026",             prezzo:59.99, image:"Logo.png",    prodimg:"postercalendariof1.png",  cat:"poster" },
     { id:26, nome:"Poster RedBull 2026",                   prezzo:72.99, image:"redbull.png", prodimg:"posterredbull2026.png",   cat:"poster" },
     { id:27, nome:"Poster Ferrari SF-26",                  prezzo:72.99, image:"ferrari.png", prodimg:"posterferrari.png",       cat:"poster" },
-    { id:28, nome:"Poster Gran Premio Suzuka Red Bull",    prezzo:72.99, image:"redbull.png", prodimg:"posterredbullsuzuka.png", cat:"poster" },
-    { id:29, nome:"Poster Audi",                           prezzo:72.99, image:"audi.png",    prodimg:"posteraudi.png",          cat:"poster" },
+    { id:28, nome:"Poster Audi",                           prezzo:72.99, image:"audi.png",    prodimg:"posteraudi.png",          cat:"poster" },
+    { id:29, nome:"Poster Gran Premio Suzuka Red Bull",    prezzo:72.99, image:"redbull.png", prodimg:"posterredbullsuzuka.png", cat:"poster" },
     { id:30, nome:"Manifesto GP Formula 1 Las Vegas 2025", prezzo:72.99, image:"Logo.png",    prodimg:"posterlasvegas2025.png",  cat:"poster" },
 ];
 
